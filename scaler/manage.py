@@ -110,14 +110,17 @@ class SlaveManager:
     def handle_logs(self):
         while True:
             for id_, proc in self.clusters.items():
-                util_check = psutil.Process(pid=proc.proc.pid)
-                with util_check.oneshot():
-                    status = util_check.status()
-                if status == psutil.STATUS_RUNNING:
-                    content = proc.logs()
-                    if content is not None:
-                        self.on_console_log(proc, content)
-                else:
+                try:
+                    util_check = psutil.Process(pid=proc.proc.pid)
+                    with util_check.oneshot():
+                        status = util_check.status()
+                    if status == psutil.STATUS_RUNNING:
+                        content = proc.logs()
+                        if content is not None:
+                            self.on_console_log(proc, content)
+                    else:
+                        self.on_slave_dead(proc)
+                except psutil.NoSuchProcess:
                     self.on_slave_dead(proc)
             time.sleep(self.time_interval)
 

@@ -1,4 +1,5 @@
 import asyncio
+import os
 
 from discord.ext import commands
 from scaler import slave
@@ -27,4 +28,4 @@ class MyBot(commands.Bot, slave.Slave):
 
 bot = MyBot(command_prefix="?")
 if __name__ == "__main__":
-    bot.run("NjQxMzgxNzYyNzg1NjA3Njk4.XuuNow.aTiEWVmabfLq0gjbPsg0gX-7CPY")
+    bot.run(str(os.getenv("BOT_TOKEN")))
