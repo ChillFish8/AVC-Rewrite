@@ -40,6 +40,9 @@ class ClusterProcess:
             return None
 
     def restart(self):
+        for i in range(3):
+            logging.debug("Attempting restart in {}".format(3-i))
+            time.sleep(1)
         logging.info("Cluster {}, Process with PID: {} is attempting to restart.".format(self.id, self.pid))
         try:
             self._proc.kill()
@@ -76,6 +79,7 @@ class SlaveManager:
         self.thread_pool = concurrent.futures.ThreadPoolExecutor(max_workers=2)
         self.app = Flask(name)
         self.clusters = {}
+        self.running = True
 
     def __enter__(self, scale=1, name=__name__):
         self.name = name
@@ -88,6 +92,7 @@ class SlaveManager:
         self.thread_pool.shutdown()
 
     def shutdown_slaves(self):
+        self.running = False
         for id_, proc in self.clusters.items():
             proc: ClusterProcess = proc
             proc.proc.kill()
@@ -108,7 +113,7 @@ class SlaveManager:
         self.handle_logs()
 
     def handle_logs(self):
-        while True:
+        while self.running:
             for id_, proc in self.clusters.items():
                 try:
                     util_check = psutil.Process(pid=proc.proc.pid)

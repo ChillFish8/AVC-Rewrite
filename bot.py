@@ -8,7 +8,7 @@ from scaler import slave
 
 from utils.logger import Logger
 
-with open('bot_config.json', 'r') as file:
+with open('configs/bot_config.json', 'r') as file:
     settings = json.load(file)
 
 # Some constants we need to define before everything else.
@@ -22,9 +22,9 @@ ICON = "https://cdn.discordapp.com/app-icons/656598065532239892/39344a26ba0c5b2c
 class MyBot(commands.Bot, slave.Slave):
     """ This is a slave bot class, YOU DO NOT CONTROL SHARDS IN THIS FILE """
     def __init__(self, **options):
-        id_range = self.shard_ids_from_cluster()
-        options['shard_ids'] = id_range
-        options['shard_count '] = self.TOTAL_SHARDS
+        # id_range = self.shard_ids_from_cluster()
+        # options['shard_ids'] = id_range
+        # options['shard_count '] = self.TOTAL_SHARDS
         super().__init__("", **options)
 
         self.ready_already = False

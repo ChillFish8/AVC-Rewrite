@@ -1,9 +1,10 @@
 import sys
 
 class Slave:
-    starting_args = sys.argv
-    CLUSTER_ID, SHARDS, TOTAL_SHARDS = int(starting_args[1]), int(starting_args[2]), int(starting_args[3])
+    def __init__(self):
+        starting_args = sys.argv
+        self.CLUSTER_ID, self.SHARDS, self.TOTAL_SHARDS = \
+            int(starting_args[1]), int(starting_args[2]), int(starting_args[3])
 
-    @classmethod
-    def shard_ids_from_cluster(cls):
-        return list(range(cls.SHARDS * cls.CLUSTER_ID, cls.SHARDS * cls.CLUSTER_ID + cls.SHARDS))
+    def shard_ids_from_cluster(self):
+        return list(range(self.SHARDS * self.CLUSTER_ID, self.SHARDS * self.CLUSTER_ID + self.SHARDS))
