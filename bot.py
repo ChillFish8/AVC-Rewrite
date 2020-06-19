@@ -22,9 +22,10 @@ ICON = "https://cdn.discordapp.com/app-icons/656598065532239892/39344a26ba0c5b2c
 class MyBot(commands.Bot, slave.Slave):
     """ This is a slave bot class, YOU DO NOT CONTROL SHARDS IN THIS FILE """
     def __init__(self, **options):
-        # id_range = self.shard_ids_from_cluster()
-        # options['shard_ids'] = id_range
-        # options['shard_count '] = self.TOTAL_SHARDS
+        if __name__ != "__main__":
+            id_range = self.shard_ids_from_cluster()
+            options['shard_ids'] = id_range
+            options['shard_count '] = self.TOTAL_SHARDS
         super().__init__("", **options)
 
         self.ready_already = False
@@ -48,7 +49,7 @@ class MyBot(commands.Bot, slave.Slave):
     async def on_ready_once(self):
         await self.wait_until_ready()
 
-    async def on_shard_ready(self, shard_id):
+    async def on_ready(self, shard_id=1):
         Logger.log_shard_connect(shard_id)
         if not self.ready_already:
             self.ready_already = True

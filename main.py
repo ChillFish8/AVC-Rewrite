@@ -2,7 +2,7 @@ import logging
 
 from scaler.manage import SlaveManager
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 class MyBotManager(SlaveManager):
     def __init__(self, target, shards, **kwargs):
