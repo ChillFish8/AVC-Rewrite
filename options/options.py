@@ -12,5 +12,5 @@ class Template:
         self.vc_id = vc_id
         self.template_str = vc_template
 
-    def get_name(self, *args, **kwargs):
+    def get_name(self, **options):
         return "bob"

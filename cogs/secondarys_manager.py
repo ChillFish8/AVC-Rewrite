@@ -30,10 +30,17 @@ class OwnerCommands(commands.Cog):
             if channel.member_count <= 0:
                 await channel.delete(reason="No members in channel")
             else:
-                await channel.rename(context={'before': before, 'after': after})
+                await channel.rename(context={'vc_before': before, 'vc_after': after})
 
-    async def cog_command_error(self, ctx, error):
-        print(error)
+    @commands.Cog.listener()
+    async def on_member_update(self, before: discord.Member, after: discord.Member):
+        state: discord.VoiceState = after.voice
+        if state.channel is None:
+            return
+        elif self.secondaries.get(state.channel.id):
+            secondary: SecondaryAVChannel = self.secondaries.get(state.channel.id)
+            await secondary.rename(context={'user_before': before, 'user_after': after})
+
 
 def setup(bot):
     bot.add_cog(OwnerCommands(bot))
