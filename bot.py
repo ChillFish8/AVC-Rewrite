@@ -7,6 +7,8 @@ from discord.ext import commands
 from scaler import slave
 
 from utils.logger import Logger
+from data.cache import Cache
+from objects.auto_voice_channel import AutoVoiceChannel
 
 with open('configs/bot_config.json', 'r') as file:
     settings = json.load(file)
@@ -48,6 +50,8 @@ class MyBot(commands.Bot, slave.Slave):
 
     async def on_ready_once(self):
         await self.wait_until_ready()
+        guild = self.get_guild(601015720200896512)
+        Cache.auto_voice_channels[715588589068746852] = AutoVoiceChannel(guild, channel_id=715588589068746852)
 
     async def on_ready(self, shard_id=1):
         Logger.log_shard_connect(shard_id)
