@@ -13,4 +13,4 @@ class Template:
         self.template_str = vc_template
 
     def get_name(self, **options):
-        return "bob"
+        query = self.template_str
