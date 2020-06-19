@@ -20,18 +20,17 @@ class OwnerCommands(commands.Cog):
 
     async def make_secondary(self, member, voice):
         if Cache.auto_voice_channels.get(voice.channel.id):
-            secondary: SecondaryAVChannel= await Cache.auto_voice_channels.get(voice.channel.id).new(member=member)
+            secondary: SecondaryAVChannel = await Cache.auto_voice_channels.get(voice.channel.id).new(member=member)
             self.secondaries[secondary.id] = secondary
             await member.move_to(secondary.channel, reason="Moving to secondary")
 
     async def check_delete(self, before):
         if self.secondaries.get(before.channel.id):
             channel: SecondaryAVChannel = self.secondaries.get(before.channel.id)
-            if len(channel.member_count) <= 0:
+            if channel.member_count <= 0:
                 await channel.delete(reason="No members in channel")
             else:
-
-
+                pass
 
     async def cog_command_error(self, ctx, error):
         print(error)

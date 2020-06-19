@@ -50,8 +50,8 @@ class MyBot(commands.Bot, slave.Slave):
 
     async def on_ready_once(self):
         await self.wait_until_ready()
-        guild = self.get_guild(601015720200896512)
-        Cache.auto_voice_channels[715588589068746852] = AutoVoiceChannel(guild, channel_id=715588589068746852)
+        guild = self.get_guild(638139515760017448)
+        Cache.auto_voice_channels[715553882289209405] = AutoVoiceChannel(guild, channel_id=715553882289209405)
 
     async def on_ready(self, shard_id=1):
         Logger.log_shard_connect(shard_id)

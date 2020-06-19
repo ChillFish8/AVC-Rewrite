@@ -22,7 +22,7 @@ class BaseAutoVoiceChannel:
             voice_channel=new,
             template=self._template
         )
-        return new
+        return self._active_channels[new.id]
 
     @property
     def active(self):
@@ -53,5 +53,7 @@ class SecondaryAVChannel:
     async def delete(self, **kwargs):
         await self.channel.delete(**kwargs)
 
-
+    async def rename(self, type_, *args, **kwargs):
+        if self.template.needed_types.get(type_):
+            new_name = self.template.get_name(*args, **kwargs)
 
