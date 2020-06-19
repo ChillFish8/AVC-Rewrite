@@ -77,6 +77,7 @@ class MyBot(commands.Bot, slave.Slave):
             await self.process_commands(message=message)
 
 
-bot = MyBot(command_prefix="?")
 if __name__ == "__main__":
+    bot = MyBot(case_insensitive=True, fetch_offline_member=False)
+    bot.startup()
     bot.run(str(os.getenv("BOT_TOKEN")))
